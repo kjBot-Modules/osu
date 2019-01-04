@@ -5,7 +5,7 @@
 ```json
 {
     "require": {
-        "ext-imagick": "^7.2",
+        "ext-imagick": "^3.4",
         "intervention/image": "^2.4"
     }
 }

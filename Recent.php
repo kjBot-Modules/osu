@@ -30,7 +30,7 @@ class Recent extends Module{
             $data->username = $user->username;
         }else{
             $id = Bind::GetID($event->getId());
-            if($id === false){
+            if($id === NULL){
                 q('未提供查询目标，若需要绑定可以发送“绑定osu”');
             }
             $data = $api->getUserRecentById($id, ['m' => $mode??Bind::GetMode($event->getId())])[0];
