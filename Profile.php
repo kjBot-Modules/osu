@@ -13,7 +13,7 @@ class Profile extends Module{
         if(isset($args[1])){
             $uid = ((new V1())->getUser($args[1])??q('指定的用户不存在（或者被ban了'))[0]->user_id;
         }else{
-            $uid = Bind::GetID($event->getId());
+            $uid = Bind::GetID($event->getId())??q('未提供查询目标，若需要绑定可以发送“绑定osu”');
         }
         $mode = Mode::Parse($args[2])??Mode::osu;
         $img = static::Draw($uid, $mode);
