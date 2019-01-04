@@ -14,16 +14,18 @@ class Recent extends Module{
         Access::Control($event)->requireLevel(AccessLevel::User);
 
         $api = new V1();
+        $username = substr($event->__toString(), strlen($args[0])+1);
         if(\preg_match('/:(\d+)/', $event->__toString(), $match)){ //解析模式
             $mode = $match[1];
+            $username = str_replace($match[0], '', $username);
         }
 
-        if(isset($args[1])){
-            $user = $api->getUser($args[1])[0];
+        if(preg_match_all('/[A-Za-z0-9-]+/', $username)){
+            $user = $api->getUser($username)[0];
             if($user === NULL){
                 q('指定的玩家不存在（或者被ban了');
             }
-            $data = $api->getUserRecent($args[1], ['m' => $mode??Mode::osu])[0];
+            $data = $api->getUserRecent($username, ['m' => $mode??Mode::osu])[0];
             if($data === NULL){
                 q('玩家最近没有成绩');
             }
