@@ -6,9 +6,7 @@ use kjBot\Framework\Message;
 use kjBot\Framework\DataStorage;
 use kjBot\Framework\Event\MessageEvent;
 use kjBotModule\kj415j45\osu\API\V1;
-use kjBotModule\kj415j45\CoreModule\Access;
 use kjBotModule\kj415j45\CoreModule\Session;
-use kjBotModule\kj415j45\CoreModule\AccessLevel;
 
 class Bind extends Module{
 

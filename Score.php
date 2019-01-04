@@ -94,7 +94,7 @@ class Score{
     }
 
     public function draw(){
-        Image::configure(array('driver' => 'imagick')); //用GD2你要渲染半年
+        Image::configure(array('driver' => 'imagick')); //用GD2你要渲染半年（而且对齐还有问题）
 
         $resources = __DIR__.'/resources/';
         $exo2 = $resources.'Exo2-Regular.ttf';
