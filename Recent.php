@@ -21,24 +21,15 @@ class Recent extends Module{
         }
 
         if(preg_match_all('/[A-Za-z0-9-]+/', $username)){
-            $user = $api->getUser($username)[0];
-            if($user === NULL){
-                q('指定的玩家不存在（或者被ban了');
-            }
+            $user = $api->getUser($username)[0]??q('指定的玩家不存在（或者被ban了');
             $data = $api->getUserRecent($username, ['m' => $mode??Mode::osu])[0];
-            if($data === NULL){
-                q('玩家最近没有成绩');
-            }
             $data->username = $user->username;
         }else{
             $id = Bind::GetID($event->getId());
-            if($id === NULL){
-                q('未提供查询目标，若需要绑定可以发送“绑定osu”');
-            }
-            $data = $api->getUserRecentById($id, ['m' => $mode??Bind::GetMode($event->getId())])[0];
+            $data = $api->getUserRecentById($id??q('未提供查询目标，若需要绑定可以发送“绑定osu”'), ['m' => $mode??Bind::GetMode($event->getId())])[0];
             $data->username = Bind::GetUsername($event->getId());
         }
-        $score = new Score($data, $mode??Mode::osu);
+        $score = new Score($data??q('玩家最近没有成绩'), $mode??Mode::osu);
         $score->draw()->save(DataStorage::$storagePath.'data/osu.score/'.$event->msgId.'.png');
         return $event->sendBack(\sendImg(DataStorage::GetData('osu.score/'.$event->msgId.'.png')));
     }

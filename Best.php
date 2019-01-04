@@ -35,16 +35,10 @@ class Best extends Module{
                 q('请提供 osu!ID');
             }
             $user = $api->getUser($username)[0];
-            if($user === NULL){
-                q('指定的玩家不存在（或者被ban了');
-            }
-            $data = $api->getUserBP($user->user_id, $index??1, ['m' => $mode??Mode::osu]);
-            if($data === NULL){
-                q('玩家最近没有成绩');
-            }
+            $data = $api->getUserBP(($user??q('指定的玩家不存在（或者被ban了'))->user_id, $index??1, ['m' => $mode??Mode::osu]);
             $data->username = $user->username;
         }
-        $score = new Score($data, $mode??Mode::osu);
+        $score = new Score($data??q('没有bp'.$index), $mode??Mode::osu);
         $score->draw()->save(DataStorage::$storagePath.'data/osu.score/'.$event->msgId.'.png');
         return $event->sendBack(\sendImg(DataStorage::GetData('osu.score/'.$event->msgId.'.png')));
     }
