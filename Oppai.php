@@ -24,7 +24,7 @@ class Oppai{
 
     public static function CountPP(Score $score): object{
         $modStr = Mod::GetModString($score->mod);
-        return static::execute($score->bid, "+{$modStr} -m{$score->mode} ".number_format($score->acc, 2)."% {$score->count100}x100 {$score->count50}x50 {$score->countMiss}xmiss {$score->maxCombo}x ");
+        return static::execute($score->bid, "+{$modStr} -m{$score->mode} {$score->count100}x100 {$score->count50}x50 {$score->countMiss}xmiss {$score->maxCombo}x ");
     }
 
     private static function execute(int $bid, string $query): object{
