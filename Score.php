@@ -21,7 +21,7 @@ class Score{
         $this->maxCombo = $obj->maxcombo;
         $this->perfect = $obj->perfect;
         $this->date = new \DateTime($obj->date);
-        $this->pp = $obj->pp;
+        $this->pp = @$obj->pp;
         $this->mod = $obj->enabled_mods;
         $this->rank = $obj->rank;
         $this->mode = $mode;

@@ -21,10 +21,7 @@ class Best extends Module{
         }
         $username = trim($username);
         if(strpos($args[0], 'me') !== false){ //如果是在查自己的成绩则不询问参数
-            $id = Bind::GetID($event->getId());
-            if($id === NULL){
-                q('请发送“绑定osu”进行绑定');
-            }
+            $id = Bind::GetID($event->getId())??q('请发送“绑定osu”进行绑定');
             $data = $api->getUserBP($id, $index??1, ['m' => $mode??Bind::GetMode($event->getId())])
                     ??q('没有bp'.$index);
             $data->username = Bind::GetUsername($event->getId());

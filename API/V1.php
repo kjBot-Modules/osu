@@ -7,8 +7,7 @@ class V1{
 
     public function __construct(string $key = NULL){
         if($key === NULL){
-            global $Config;
-            $this->key = $Config['osu_api_key'];
+            $this->key = Config('osu_api_key');
         }else{
             $this->key = $key;
         }
