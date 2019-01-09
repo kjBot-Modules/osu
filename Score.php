@@ -62,7 +62,7 @@ class Score{
         try{
             $bg = Image::make('https://bloodcat.com/osu/i/'.$map)->fit(1280, 720);
         }catch(\Exception $e){
-            return Image::make(__DIR__.'/resourcess/bg.jpg')->resize(1280, 720); //Fallback 背景
+            return Image::make(__DIR__.'/resources/bg.jpg')->resize(1280, 720); //Fallback 背景
         }
         return $bg;
     }
