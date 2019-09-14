@@ -20,6 +20,7 @@ class Mod{
         if($mod & 4096)$list['SO']=1;
         if($mod & 8192)$list['AP']=1;
         if($mod & 16384){unset($list['SD']);$list['PF']=1;}
+        if($mod & 1073741824)$list['MR']=1;
 
         return $list;
     }
