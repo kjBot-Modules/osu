@@ -12,16 +12,18 @@ class Profile extends Module{
     public function process(array $args, MessageEvent $event): Message{
         if(isset($args[1])){
             $uid = ((new V1())->getUser($args[1])??q('指定的用户不存在（或者被ban了'))[0]->user_id;
+            $mode = $args[2];
         }else{
             $uid = Bind::GetID($event->getId())??q('未提供查询目标，若需要绑定可以发送“绑定osu”');
+            $mode = Bind::GetMode($event->getId());
         }
-        $mode = Mode::Parse($args[2])??Mode::osu;
+        $mode = Mode::Parse($mode);
         $img = static::Draw($uid, $mode);
         $img->save(DataStorage::$storagePath.'data/osu.profile/'.$uid.'.png');
         return $event->sendBack(\sendImg(DataStorage::GetData('osu.profile/'.$uid.'.png')));
     }
 
-    public static function Draw($uid, int $mode = Mode::osu){
+    public static function Draw($uid, ?int $mode = Mode::osu){
         Image::configure(array('driver' => 'imagick')); //用GD2你要渲染半年（而且对齐还有问题）
         $mode = Mode::ToStr($mode);
         $web = file_get_contents('https://osu.ppy.sh/users/'.$uid.'/'.$mode);
@@ -38,6 +40,8 @@ class Profile extends Module{
         $exo2_bold = $resources.'Exo2-Bold.ttf';
         $yahei = $resources.'Yahei.ttf';
         $white = '#ffffff';
+
+        $mode = $user->playmode;
         $badges = $user->badges;
         $badge = $badges[rand(0, count($badges)-1)];
         $flag = file_exists($resources."flags/{$user->country->code}.png")?($resources."flags/{$user->country->code}.png"):($resources.'flags/__.png');
@@ -100,7 +104,7 @@ class Profile extends Module{
         }
         $img->text(sprintf('%.2f', $statics->pp), 690, 280, imageFont($exo2_bold, 40, $white));
         $img->text('PP', 740, 300, imageFont($exo2_bold, 20, $white));
-        $img->text('#'.number_format($statics->rank->global), 930, 280, imageFont($exo2_bold, 20, $white, 'right'));
+        $img->text('#'.number_format($statics->global_rank), 930, 280, imageFont($exo2_bold, 20, $white, 'right'));
         $img->text($user->country->code.' '.'#'.number_format($statics->rank->country), 930, 300, imageFont($exo2_bold, 20, $white, 'right'));
         $xIndex = 675;
         foreach($grade as $key => $value){

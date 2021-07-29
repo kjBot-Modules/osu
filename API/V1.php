@@ -38,9 +38,9 @@ class V1{
     }
 
     public function getBeatmapFromHash(string $hash): ?object{
-        return $this->getBeatmaps(array_merge($param, [
+        return $this->getBeatmaps([
             'h' => $hash,
-        ]))[0];
+        ])[0];
     }
 
 
@@ -66,7 +66,7 @@ class V1{
 
     public function getScores(int $bid, array $param = []): array{
         $api = APIv1::getScores;
-        return $this-query($api, array_merge($param, [
+        return $this->query($api, array_merge($param, [
             'b' => $bid,
         ]));
     }
