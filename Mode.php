@@ -9,6 +9,8 @@ class Mode{
 
     public static final function Parse(?string $str): ?int{
         switch($str){
+            case null:
+                return null;
             case 'mania': case ':3': case '3': case '敲键盘': case '2dx': case '拍键盘':
                 return Mode::mania;
             case 'ctb': case 'fruit': case 'fruits': case ':2': case '2': case '接水果': case '接屎':
@@ -18,17 +20,18 @@ class Mode{
             case 'std': case ':0': case '0': case '戳泡泡': case 'osu':
                 return Mode::osu;
             default:
-                return NULL;
+                return null;
         }
     }
 
-    public static final function ToStr(int $mode){
+    public static final function ToStr(?int $mode){
         switch($mode){
+            case null: return null;
             case Mode::osu: return 'osu';
             case Mode::taiko: return 'taiko';
             case Mode::ctb: return 'fruits';
             case Mode::mania: return 'mania';
-            default: return NULL;
+            default: return null;
         }
     }
 }
